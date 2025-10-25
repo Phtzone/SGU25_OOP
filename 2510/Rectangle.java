@@ -43,4 +43,4 @@ public class Rectangle extends Shape {
     }
 }
 
-// ke thua da hinh, interface, lop ao
+// ke thua da hinh, interface, lop ao, phuong trinh dao ham rieng
