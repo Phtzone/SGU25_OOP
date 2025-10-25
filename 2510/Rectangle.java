@@ -31,13 +31,16 @@ public class Rectangle extends Shape {
     }
     
     public double getArea(){
-
+        return width * length;
     }
 
     public double getPerimeter(){
+        return 2*(width * length);
 
     }
         public String toString(){
-        
+        return "Width: " + this.width + ", Length: " + this.length;
     }
 }
+
+// ke thua da hinh, interface, lop ao

@@ -9,7 +9,9 @@ public class Circle extends Shape{
     }
 
     public Circle(double radius, String color, Boolean filled){
-
+        this.radius = radius;
+        this.color = color;
+        this.filled = filled;
     }
     
     public void setRadius(double radius){
@@ -21,14 +23,14 @@ public class Circle extends Shape{
     }
 
     public double getArea(){
-
+        return radius * radius * Math.PI;
     }
     
     public double getPerimeter(){
-
+        return 2 * Math.PI * radius;
     }
 
-    public string toString(){
-        
+    public String toString(){
+
     }
 }
