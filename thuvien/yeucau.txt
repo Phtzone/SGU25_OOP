@@ -1,0 +1,5 @@
+cho n cuốn sách, thông tin ngẫu nhiên
+tìm tác giả có nhiều cuốn sách nhất
+N = 100
+trong năm 2000, ai là người viết nhiều sách nhất
+Nếu mảng có 1 tác giả thì ghi 1 tác giả, nhiều mảng có nhiều tác giả thì sách có nhiều tác giả 

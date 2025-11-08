@@ -1,8 +1,8 @@
 package xe;
 
 public class Main {
-    public static void main(String[] args){
-        vinfast xe1 = new vinfast();
+    public static void main(String[] args) {
+        Vinfast xe1 = new Vinfast();
 
         xe1.model = "VF3";
         xe1.mauxe = "do";
