@@ -31,41 +31,46 @@ public class PolyLine {
     }
 
     // Tổng chiều dài các đoạn nối liên tiếp (không đóng kín)
-    public double getLength() {
-        double sum = 0;
-        for (int i = 1; i < points.size(); i++) {
-            Point a = points.get(i - 1);
-            Point b = points.get(i);
-            sum += Math.hypot(b.getX() - a.getX(), b.getY() - a.getY());
-        }
-        return sum;
-    }
+	public double getLength() {
+		double length = 0;
+		for (int i = 0; i < points.size() - 1; i++) {
+			int x1 = points.get(i).getX();
+			int y1 = points.get(i).getY();
+			int x2 = points.get(i + 1).getX();
+			int y2 = points.get(i + 1).getY();
+			double distance = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+			length += distance;
+		}
+		return length;
+	}
 
     // Chu vi của đa giác đóng kín (từ cuối nối về đầu)
     public double getPerimeter() {
         double per = getLength();
         int n = points.size();
         if (n > 2) {
-            Point first = points.get(0);
-            Point last  = points.get(n - 1);
-            per += Math.hypot(last.getX() - first.getX(), last.getY() - first.getY());
+            int x1 = points.get(0).getX();
+            int y1 = points.get(0).getY();
+            int x2 = points.get(n - 1).getX();
+            int y2 = points.get(n - 1).getY();
+            double distance = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+            per += distance;
         }
         return per;
     }
 
-    /** 
-     * Diện tích đa giác đóng kín theo công thức Shoelace:
-     * ½ * |Σ (x_i * y_{i+1} − x_{i+1} * y_i)| 
-     */
+    // Diện tích đa giác đóng kín theo công thức Shoelace:
     public double getArea() {
         int n = points.size();
         if (n < 3) return 0; 
 
         double sum = 0;
         for (int i = 0; i < n; i++) {
-            Point p1 = points.get(i);
-            Point p2 = points.get((i + 1) % n);
-            sum += p1.getX() * p2.getY() - p2.getX() * p1.getY();
+            int x1 = points.get(i).getX();
+            int y1 = points.get(i).getY();
+            int x2 = points.get((i + 1) % n).getX();
+            int y2 = points.get((i + 1) % n).getY();
+            sum += x1 * y2 - x2 * y1;
         }
         return Math.abs(sum) / 2.0;
     }

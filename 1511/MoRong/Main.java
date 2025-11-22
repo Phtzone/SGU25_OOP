@@ -1,18 +1,27 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        List<Point> rectPts = Arrays.asList(
-                new Point(0, 0),
-                new Point(3, 0),
-                new Point(3, 4),
-                new Point(0, 4));
-        PolyLine pl = new PolyLine(rectPts);
+
+
+        // Tạo đa giác với số điểm ngẫu nhiên
+        Random rd0 = new Random();
+        int soDiem = rd0.nextInt(6) + 3; 
+        List<Point> rectPts = new ArrayList<>();
+        for (int i = 0; i < soDiem; i++) {
+            int x = rd0.nextInt(10) - 2; 
+            int y = rd0.nextInt(10) - 2; 
+            rectPts.add(new Point(x, y));
+        }
+
+        PolyLine pl = new PolyLine(rectPts);  
 
         System.out.println("PolyLine  : " + pl);
-        System.out.printf("Length    : %.2f%n", pl.getLength());
-        System.out.printf("Perimeter : %.2f%n", pl.getPerimeter());
-        System.out.printf("Area      : %.2f%n%n", pl.getArea());
+        System.out.printf("Length    : %.2f%n", pl.getLength());     // 10.00
+        System.out.printf("Perimeter : %.2f%n", pl.getPerimeter());  // 14.00
+        System.out.printf("Area      : %.2f%n%n", pl.getArea());     // 12.00
 
         int n = 5;
         PTB2[] arr = new PTB2[n];
@@ -23,39 +32,48 @@ public class Main {
             double c = rd.nextInt(11) - 5;
             arr[i] = new PTB2(a, b, c);
         }
+
         System.out.println("Ket qua nghiem PTB2");
         for (PTB2 eq : arr) {
-            System.out.println(eq + "  ->  " + eq.getSolution());
+            System.out.println(eq + "  ⇒  " + eq.getSolution());
         }
 
-        // PHAN MO RONG (C3 -> C8)
-        System.out.println("\n Mo rong C3 -> C8 ");
+        System.out.println("\nCau 3: Ve da giac n canh");
+        PolyLine polygon = new PolyLine(rectPts);
+        int soCanh = rectPts.size();
+        System.out.println("Da giac " + soCanh + " canh: " + polygon);
+        System.out.printf("So dinh: %d%n", rectPts.size());
+        System.out.printf("Chu vi: %.2f%n", polygon.getPerimeter());
+        System.out.printf("Dien tich: %.2f%n", polygon.getArea());
 
-        // C3: da giac 5 dinh
-        List<Point> pts = Arrays.asList(
-                new Point(0, 0), new Point(5, 0),
-                new Point(6, 3), new Point(3, 6),
-                new Point(0, 4));
-        PolyLine poly = new PolyLine(pts);
-        System.out.println("Da giac    : " + poly);
-        System.out.printf("Chu vi     : %.2f%n", poly.getPerimeter());
-        System.out.printf("Dien tich  : %.2f%n", poly.getArea());
+        System.out.println("\nCau 4: Kiem tra diem nam trong da giac");
+        Point testPoint = new Point(1, 1);
+        System.out.println("Diem " + testPoint + " co nam trong? " + polygon.isPointInside(testPoint));
+        Point outsidePoint = new Point(10, 10);
+        System.out.println("Diem " + outsidePoint + " co nam trong? " + polygon.isPointInside(outsidePoint));
 
-        // C4: kiem tra diem
-        Point q = new Point(3, 2);
-        System.out.println(q + (poly.contains(q) ? " nam TRONG " : " nam NGOAI ") + "da giac");
+        System.out.println("\nCau 5: Dien tich da giac");
+        System.out.printf("Dien tich da giac: %.2f%n", polygon.getArea());
 
-        // C6: bo dinh toi uu
-        int idx = poly.bestRemovalIndex();
-        System.out.printf("Bo dinh #%d %s  ->  dien tich con lai = %.2f%n",
-                idx, pts.get(idx), poly.areaWithout(idx));
+        System.out.println("\nCau 6: Tim diem can bo de dien tich lon nhat");
+        int bestIdx = polygon.findBestPointToRemove();
+        System.out.println("Bo diem tai vi tri: " + bestIdx + " (" + rectPts.get(bestIdx) + ")");
 
-        // C7: giao duong thang va parabol
-        Line l1 = new Line(1, 0); // y = x
-        QuadraticF f = new QuadraticF(1, -2, -3); // y = x^2 - 2x - 3
-        System.out.println("Giao l1 va f: " + f.intersect(l1));
+        System.out.println("\nCau 7: Giao diem duong thang va PTB2");
+        PTB1 line1 = new PTB1(2, -1); // y = 2x - 1
+        PTB2 para1 = new PTB2(1, -3, 2); // y = x² - 3x + 2
+        System.out.println("Duong thang: " + line1);
+        System.out.println("Parabol: " + para1);
+        System.out.println("Ket qua: " + para1.getIntersection(line1));
 
-        // C8: tiep tuyen song song l1
-        System.out.println("Tiep tuyen song song l1: " + f.tangentParallel(l1));
+        System.out.println("\nCau 8: Duong thang song song va tiep xuc");
+        PTB1 line2 = new PTB1(1, 0); // y = x
+        PTB2 para2 = new PTB2(1, 0, 0); // y = x²
+        PTB1 tangent = para2.getTangentParallel(line2);
+        if (tangent != null) {
+            System.out.println("Duong thang goc: " + line2);
+            System.out.println("Parabol: " + para2);
+            System.out.println("Duong thang tiep xuc: " + tangent);
+        }
     }
 }
